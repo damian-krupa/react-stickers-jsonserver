@@ -1,0 +1,42 @@
+body {
+    background: #696e9e;
+}
+
+.sticker {
+    padding-top: 20px;
+    background: #ffffff;
+    min-height: 100px;
+    min-width: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 1px solid #34b399;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
+
+.sticker .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    background: #34b399;
+    width: 100%;
+}
+
+.sticker textarea {
+    padding: 3px 10px;
+    box-sizing: border-box;
+    min-height: 100px;
+    min-width: 100px;
+    background: transparent;
+    border: none;
+}
+
+.sticker .bar:hover {
+    cursor: move;
+    background: #4bd0b5;
+}
+
+.sticker:hover {
+    z-index: 1;
+}

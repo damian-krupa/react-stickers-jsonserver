@@ -79,10 +79,12 @@ export class App extends React.Component {
             notes: Object.assign(this.state.notes, note)
         });
 
-        // this.updateStickers({
-        //     id: note.id,
-        //     content: "DDDDDDDDDDDDDDDDDDDD"
-        // },METHOD_PATCH)
+        this.updateStickers({
+            id: note.id,
+            content: note.content,
+            x: note.x,
+            y: note.y
+        },METHOD_PATCH)
     };
 
     render() {
