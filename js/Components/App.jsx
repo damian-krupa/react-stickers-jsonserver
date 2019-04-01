@@ -56,17 +56,15 @@ export class App extends React.Component {
             .then( data => {
                 let stickers = [];
                 const index = this.state.notes.findIndex(note => note.id === data.id);
-                console.log(data);
                 if (index > -1) {
-                    stickers = this.state.notes[index] = data
+                    //there is no need to do stuff when it already exists
                 } else {
-                    stickers = this.state.notes.concat(data)
+                    stickers = this.state.notes.concat(data);
+                    this.setState({
+                        notes: stickers,
+                        counter: this.state.counter + 1
+                    });
                 }
-
-                this.setState({
-                    notes: stickers,
-                    counter: this.state.counter + 1
-                });
             })
             .catch(err => console.warn(err));
     };
@@ -88,7 +86,7 @@ export class App extends React.Component {
     };
 
     render() {
-        const notes = this.state.notes.map((note)=> {
+        const notes = this.state.notes.map(note => {
             return <StickyNote
                 key={note.id.toString()}
                 id={note.id}

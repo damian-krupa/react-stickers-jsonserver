@@ -155,17 +155,15 @@ var App = exports.App = function (_React$Component) {
                 var index = _this.state.notes.findIndex(function (note) {
                     return note.id === data.id;
                 });
-                console.log(data);
                 if (index > -1) {
-                    stickers = _this.state.notes[index] = data;
+                    //there is no need to do stuff when it already exists
                 } else {
                     stickers = _this.state.notes.concat(data);
+                    _this.setState({
+                        notes: stickers,
+                        counter: _this.state.counter + 1
+                    });
                 }
-
-                _this.setState({
-                    notes: stickers,
-                    counter: _this.state.counter + 1
-                });
             }).catch(function (err) {
                 return console.warn(err);
             });
@@ -181,10 +179,12 @@ var App = exports.App = function (_React$Component) {
                 notes: Object.assign(_this.state.notes, note)
             });
 
-            // this.updateStickers({
-            //     id: note.id,
-            //     content: "DDDDDDDDDDDDDDDDDDDD"
-            // },METHOD_PATCH)
+            _this.updateStickers({
+                id: note.id,
+                content: note.content,
+                x: note.x,
+                y: note.y
+            }, METHOD_PATCH);
         };
 
         _this.state = {
