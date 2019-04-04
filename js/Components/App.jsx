@@ -36,8 +36,8 @@ export class App extends React.Component {
         const newNote = {
             id: this.state.counter + 1,
             content: 'qwer',
-            x: Math.random() * 400,
-            y: Math.random() * 400
+            x: Math.floor(Math.random() * 400),
+            y: Math.floor(Math.random() * 400)
         };
         this.updateStickers(newNote, METHOD_POST)
     };
