@@ -14,6 +14,12 @@ export class StickyNote extends React.Component {
         });
     };
 
+    onDeleteBtnClick = () => {
+        this.props.onDelete({
+            id: this.props.id
+        });
+    };
+
     onControlledDragStop = (e, position) => {
         const {x, y} = position;
         this.props.onChange({
@@ -27,6 +33,7 @@ export class StickyNote extends React.Component {
         return (
             <Draggable
                 handle=".bar"
+                cancel='.deleteButton'
                 position={{
                     x:this.props.x,
                     y:this.props.y
@@ -34,11 +41,10 @@ export class StickyNote extends React.Component {
                 onStop={this.onControlledDragStop}
             >
                 <div className="sticker">
-                    <div className='bar'/>
-                    <textarea
-                        value={this.props.content}
-                        onChange={this.onContentChange}
-                    />
+                    <div className='bar'>
+                        <button className='deleteButton' onClick={this.onDeleteBtnClick}/>
+                    </div>
+                    <textarea value={this.props.content} onChange={this.onContentChange}/>
                 </div>
             </Draggable>
         )

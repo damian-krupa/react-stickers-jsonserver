@@ -2,6 +2,15 @@ body {
     background: #696e9e;
 }
 
+.addNoteBtn {
+    color: white;
+    font-size: 20px;
+    border-radius: 2px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.44);
+    background: #34b399;
+    border: none;
+}
+
 .sticker {
     padding-top: 20px;
     background: #ffffff;
@@ -19,6 +28,17 @@ body {
         height: 20px;
         background: #34b399;
         width: 100%;
+        .deleteButton {
+            border: none;
+            position: absolute;
+            top: 2px;
+            right: 5px;
+            height: 15px;
+            width: 15px;
+            cursor: pointer;
+            border-radius: 50%;
+            background: #ff0000;
+        }
     }
     textarea {
         padding: 3px 10px;

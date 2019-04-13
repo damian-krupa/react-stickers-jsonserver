@@ -4,6 +4,7 @@ import {StickyNote} from "./StickyNote.jsx";
 const NOTES_URL = "http://localhost:3000/notes";
 const METHOD_POST = "POST";
 const METHOD_PATCH = "PATCH";
+const METHOD_DELETE = "DELETE";
 
 export class App extends React.Component {
     constructor(props) {
@@ -42,23 +43,43 @@ export class App extends React.Component {
         this.updateStickers(newNote, METHOD_POST)
     };
 
-    updateStickers = (newNote, method) => {
-        const uri = NOTES_URL + (method === METHOD_PATCH ? `/${newNote.id}` : "");
+    deleteNoteOnClick = (noteToDel) => {
+        const uri = NOTES_URL + `/${noteToDel.id}`;
+        fetch(uri, {
+            method : METHOD_DELETE,
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(noteToDel)
+            })
+            .then(res => res.json())
+            .then(() => {
+                let stickers = this.state.notes;
+                const index = stickers.findIndex(note => note.id === noteToDel.id);
+                stickers.splice(index, 1);
+                this.setState({
+                    notes: stickers
+                });
+            })
+            .catch(err => console.warn(err));
+    };
+
+    updateStickers = (note, method) => {
+        const uri = NOTES_URL + ((method === METHOD_PATCH) ? `/${note.id}` : "");
         fetch(uri, {
             method : method,
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newNote)
+            body: JSON.stringify(note)
             })
             .then(res => res.json())
             .then( data => {
                 let stickers = [];
                 const index = this.state.notes.findIndex(note => note.id === data.id);
-                if (index > -1) {
-                    //there is no need to do stuff when it already exists
-                } else {
+                if (index === -1 && method === METHOD_POST) {
                     stickers = this.state.notes.concat(data);
                     this.setState({
                         notes: stickers,
@@ -71,12 +92,10 @@ export class App extends React.Component {
 
     handleOnChange = (data) => {
         let note = this.state.notes.find(item => item.id === data.id);
-        note = Object.assign(note,data);
-        console.log(note);
+        Object.assign(note,data);
         this.setState({
             notes: Object.assign(this.state.notes, note)
         });
-
         this.updateStickers({
             id: note.id,
             content: note.content,
@@ -93,6 +112,7 @@ export class App extends React.Component {
                 content={note.content}
                 x={note.x}
                 y={note.y}
+                onDelete={this.deleteNoteOnClick}
                 onChange={this.handleOnChange}
             />
         });

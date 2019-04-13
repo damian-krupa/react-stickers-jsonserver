@@ -120,6 +120,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var NOTES_URL = "http://localhost:3000/notes";
 var METHOD_POST = "POST";
 var METHOD_PATCH = "PATCH";
+var METHOD_DELETE = "DELETE";
 
 var App = exports.App = function (_React$Component) {
     _inherits(App, _React$Component);
@@ -139,15 +140,40 @@ var App = exports.App = function (_React$Component) {
             _this.updateStickers(newNote, METHOD_POST);
         };
 
-        _this.updateStickers = function (newNote, method) {
-            var uri = NOTES_URL + (method === METHOD_PATCH ? "/" + newNote.id : "");
+        _this.deleteNoteOnClick = function (noteToDel) {
+            var uri = NOTES_URL + ("/" + noteToDel.id);
+            fetch(uri, {
+                method: METHOD_DELETE,
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(noteToDel)
+            }).then(function (res) {
+                return res.json();
+            }).then(function () {
+                var stickers = _this.state.notes;
+                var index = stickers.findIndex(function (note) {
+                    return note.id === noteToDel.id;
+                });
+                stickers.splice(index, 1);
+                _this.setState({
+                    notes: stickers
+                });
+            }).catch(function (err) {
+                return console.warn(err);
+            });
+        };
+
+        _this.updateStickers = function (note, method) {
+            var uri = NOTES_URL + (method === METHOD_PATCH ? "/" + note.id : "");
             fetch(uri, {
                 method: method,
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(newNote)
+                body: JSON.stringify(note)
             }).then(function (res) {
                 return res.json();
             }).then(function (data) {
@@ -155,9 +181,7 @@ var App = exports.App = function (_React$Component) {
                 var index = _this.state.notes.findIndex(function (note) {
                     return note.id === data.id;
                 });
-                if (index > -1) {
-                    //there is no need to do stuff when it already exists
-                } else {
+                if (index === -1 && method === METHOD_POST) {
                     stickers = _this.state.notes.concat(data);
                     _this.setState({
                         notes: stickers,
@@ -173,12 +197,10 @@ var App = exports.App = function (_React$Component) {
             var note = _this.state.notes.find(function (item) {
                 return item.id === data.id;
             });
-            note = Object.assign(note, data);
-            console.log(note);
+            Object.assign(note, data);
             _this.setState({
                 notes: Object.assign(_this.state.notes, note)
             });
-
             _this.updateStickers({
                 id: note.id,
                 content: note.content,
@@ -226,6 +248,7 @@ var App = exports.App = function (_React$Component) {
                     content: note.content,
                     x: note.x,
                     y: note.y,
+                    onDelete: _this3.deleteNoteOnClick,
                     onChange: _this3.handleOnChange
                 });
             });
@@ -299,6 +322,12 @@ var StickyNote = exports.StickyNote = function (_React$Component) {
             });
         };
 
+        _this.onDeleteBtnClick = function () {
+            _this.props.onDelete({
+                id: _this.props.id
+            });
+        };
+
         _this.onControlledDragStop = function (e, position) {
             var x = position.x,
                 y = position.y;
@@ -320,6 +349,7 @@ var StickyNote = exports.StickyNote = function (_React$Component) {
                 _reactDraggable2.default,
                 {
                     handle: '.bar',
+                    cancel: '.deleteButton',
                     position: {
                         x: this.props.x,
                         y: this.props.y
@@ -329,11 +359,12 @@ var StickyNote = exports.StickyNote = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { className: 'sticker' },
-                    _react2.default.createElement('div', { className: 'bar' }),
-                    _react2.default.createElement('textarea', {
-                        value: this.props.content,
-                        onChange: this.onContentChange
-                    })
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'bar' },
+                        _react2.default.createElement('button', { className: 'deleteButton', onClick: this.onDeleteBtnClick })
+                    ),
+                    _react2.default.createElement('textarea', { value: this.props.content, onChange: this.onContentChange })
                 )
             );
         }
@@ -383,7 +414,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "body {\n  background: #696e9e; }\n\n.sticker {\n  padding-top: 20px;\n  background: #ffffff;\n  min-height: 100px;\n  min-width: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  border: 1px solid #34b399;\n  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); }\n  .sticker .bar {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 20px;\n    background: #34b399;\n    width: 100%; }\n  .sticker textarea {\n    padding: 3px 10px;\n    box-sizing: border-box;\n    min-height: 100px;\n    min-width: 100px;\n    background: transparent;\n    border: none; }\n  .sticker .bar:hover {\n    cursor: move;\n    background: #4bd0b5; }\n  .sticker:hover {\n    z-index: 1; }\n", ""]);
+exports.push([module.i, "body {\n  background: #696e9e; }\n\n.addNoteBtn {\n  color: white;\n  font-size: 20px;\n  border-radius: 2px;\n  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.44);\n  background: #34b399;\n  border: none; }\n\n.sticker {\n  padding-top: 20px;\n  background: #ffffff;\n  min-height: 100px;\n  min-width: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  border: 1px solid #34b399;\n  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); }\n  .sticker .bar {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 20px;\n    background: #34b399;\n    width: 100%; }\n    .sticker .bar .deleteButton {\n      border: none;\n      position: absolute;\n      top: 2px;\n      right: 5px;\n      height: 15px;\n      width: 15px;\n      cursor: pointer;\n      border-radius: 50%;\n      background: #ff0000; }\n  .sticker textarea {\n    padding: 3px 10px;\n    box-sizing: border-box;\n    min-height: 100px;\n    min-width: 100px;\n    background: transparent;\n    border: none; }\n  .sticker .bar:hover {\n    cursor: move;\n    background: #4bd0b5; }\n  .sticker:hover {\n    z-index: 1; }\n", ""]);
 
 
 
