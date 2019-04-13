@@ -132,7 +132,6 @@ var App = exports.App = function (_React$Component) {
 
         _this.addNoteOnClick = function () {
             var newNote = {
-                id: _this.state.counter + 1,
                 content: 'qwer',
                 x: Math.floor(Math.random() * 400),
                 y: Math.floor(Math.random() * 400)
@@ -184,8 +183,7 @@ var App = exports.App = function (_React$Component) {
                 if (index === -1 && method === METHOD_POST) {
                     stickers = _this.state.notes.concat(data);
                     _this.setState({
-                        notes: stickers,
-                        counter: _this.state.counter + 1
+                        notes: stickers
                     });
                 }
             }).catch(function (err) {
@@ -210,8 +208,7 @@ var App = exports.App = function (_React$Component) {
         };
 
         _this.state = {
-            notes: [],
-            counter: 0
+            notes: []
         };
         return _this;
     }
@@ -229,8 +226,7 @@ var App = exports.App = function (_React$Component) {
                 }
             }).then(function (resp) {
                 _this2.setState({
-                    notes: resp,
-                    counter: resp.length
+                    notes: resp
                 });
             }).catch(function (err) {
                 return console.warn(err);

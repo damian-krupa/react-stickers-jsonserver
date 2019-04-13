@@ -10,8 +10,7 @@ export class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            notes: [],
-            counter: 0
+            notes: []
         }
     }
 
@@ -27,7 +26,6 @@ export class App extends React.Component {
             .then(resp => {
                 this.setState({
                     notes: resp,
-                    counter: resp.length
                 })
             })
             .catch(err => console.warn(err))
@@ -35,7 +33,6 @@ export class App extends React.Component {
 
     addNoteOnClick = () => {
         const newNote = {
-            id: this.state.counter + 1,
             content: 'qwer',
             x: Math.floor(Math.random() * 400),
             y: Math.floor(Math.random() * 400)
@@ -82,8 +79,7 @@ export class App extends React.Component {
                 if (index === -1 && method === METHOD_POST) {
                     stickers = this.state.notes.concat(data);
                     this.setState({
-                        notes: stickers,
-                        counter: this.state.counter + 1
+                        notes: stickers
                     });
                 }
             })
