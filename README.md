@@ -1,3 +1,9 @@
+## Description
+
+It is a Create, Read, Update and Delete (CRUD) sticky notes app written in React and using json-server for server mockup. It allows resizing of sticky notes thanks to textarea properties.
+
+![screenshot](images/preview.png)
+
 ## How to use
 
 Clone this repo
