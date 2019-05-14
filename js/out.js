@@ -132,7 +132,7 @@ var App = exports.App = function (_React$Component) {
 
         _this.addNoteOnClick = function () {
             var newNote = {
-                content: 'qwer',
+                content: '',
                 x: Math.floor(Math.random() * 400),
                 y: Math.floor(Math.random() * 400)
             };
@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "body {\n  background: #696e9e; }\n\n.addNoteBtn {\n  color: white;\n  font-size: 20px;\n  border-radius: 2px;\n  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.44);\n  background: #34b399;\n  border: none; }\n\n.sticker {\n  padding-top: 20px;\n  background: #ffffff;\n  min-height: 100px;\n  min-width: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  border: 1px solid #34b399;\n  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); }\n  .sticker .bar {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 20px;\n    background: #34b399;\n    width: 100%; }\n    .sticker .bar .deleteButton {\n      border: none;\n      position: absolute;\n      top: 2px;\n      right: 5px;\n      height: 15px;\n      width: 15px;\n      cursor: pointer;\n      border-radius: 50%;\n      background: #ff0000; }\n  .sticker textarea {\n    padding: 3px 10px;\n    box-sizing: border-box;\n    min-height: 100px;\n    min-width: 100px;\n    background: transparent;\n    border: none; }\n  .sticker .bar:hover {\n    cursor: move;\n    background: #4bd0b5; }\n  .sticker:hover {\n    z-index: 1; }\n", ""]);
+exports.push([module.i, "body {\n  background: #696e9e; }\n\n.addNoteBtn {\n  color: white;\n  font-size: 20px;\n  border-radius: 2px;\n  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.44);\n  background: #34b399;\n  border: none; }\n\n.sticker {\n  padding-top: 20px;\n  background: #ffffff;\n  min-height: 100px;\n  min-width: 100px;\n  position: absolute;\n  left: 0;\n  top: 0;\n  border: 1px solid #34b399;\n  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); }\n  .sticker .bar {\n    position: absolute;\n    top: 0;\n    left: 0;\n    height: 20px;\n    background: #34b399;\n    width: 100%; }\n    .sticker .bar:hover {\n      cursor: move;\n      background: #4bd0b5; }\n    .sticker .bar .deleteButton {\n      all: unset;\n      position: absolute;\n      right: 0;\n      width: 20px;\n      height: 20px;\n      opacity: 0.3; }\n      .sticker .bar .deleteButton:hover {\n        cursor: pointer;\n        opacity: 0.65; }\n        .sticker .bar .deleteButton:hover::before, .sticker .bar .deleteButton:hover::after {\n          background: #000000; }\n      .sticker .bar .deleteButton::before, .sticker .bar .deleteButton::after {\n        content: '';\n        position: absolute;\n        height: 3px;\n        width: 100%;\n        top: 50%;\n        left: 0;\n        margin-top: -2px;\n        background: #000; }\n      .sticker .bar .deleteButton::before {\n        -webkit-transform: rotate(45deg);\n                transform: rotate(45deg); }\n      .sticker .bar .deleteButton::after {\n        -webkit-transform: rotate(-45deg);\n                transform: rotate(-45deg); }\n  .sticker textarea {\n    padding: 3px 10px;\n    box-sizing: border-box;\n    min-height: 100px;\n    min-width: 100px;\n    background: transparent;\n    border: none; }\n  .sticker:hover {\n    z-index: 1; }\n", ""]);
 
 
 

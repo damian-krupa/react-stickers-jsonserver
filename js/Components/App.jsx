@@ -33,7 +33,7 @@ export class App extends React.Component {
 
     addNoteOnClick = () => {
         const newNote = {
-            content: 'qwer',
+            content: '',
             x: Math.floor(Math.random() * 400),
             y: Math.floor(Math.random() * 400)
         };
